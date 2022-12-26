@@ -227,10 +227,6 @@ namespace QuantumCore
         static void Main()
         {
             CircuitTest2();
-            int x = 0;
-            int y = 1;
-            int z = x + y;
-            int c = 2 * z;
         }
     }
 }
