@@ -46,6 +46,8 @@ namespace QuantumCore.Quantum
                     }
                     Operators.Add(M);
                 }
+
+                int test = 0;
                 
 
                 // БИНАРНЫЕ ОПЕРАТОРЫ
