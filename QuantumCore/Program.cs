@@ -215,18 +215,79 @@ namespace QuantumCore
             Console.WriteLine(circ.Operators[0]);
         }
 
-        static void CircuitTest2()
+        static void CNOTTest()
         {
             Template t = new Template(3);
-            t.Add("CNOT", new int[2] { 0, 2 });
+            t.Add("CNOT", new int[2] { 2, 1 });
 
             Circuit circ = new Circuit(t);
             Console.WriteLine(circ.Operators[0]);
         }
 
+        static void SWAPTest()
+        {
+            Template t = new Template(3);
+            t.Add("SWAP", new int[2] { 2, 1 });
+
+            Circuit circ = new Circuit(t);
+            Console.WriteLine(circ.Operators[0]);
+        }
+
+        static void Bell()
+        {
+            Template t = new Template(2);
+            t.Add("H", new int[1] { 0 });
+            t.Add("CNOT", new int[2] { 0, 1 });
+            t.Add("M", new int[1] { 0 });
+            t.Add("M", new int[1] { 1 });
+
+            Circuit circuit = new Circuit(t);
+            for (int i = 0; i < circuit.Operators.Count; i++) {
+                Console.WriteLine(circuit.Operators[i]);
+            }
+
+            Console.WriteLine(t);
+
+            //Matrix M1 = circuit.Operators[0];
+            //Matrix M2 = circuit.Operators[1];
+            //Console.WriteLine(M1);
+            //Console.WriteLine(M2);
+            //Console.WriteLine(M2.Product(M1));
+        }
+
+        static void Hren()
+        {
+            Template t = new Template(3);
+            t.Add("H", new int[1] { 0 });
+            t.Add("CNOT", new int[2] { 0, 1 });
+            t.Add("H", new int[1] { 1 });
+            t.Add("CNOT", new int[2] { 1, 0 });
+            t.Add("S", new int[1] { 1 });
+            t.Add("T", new int[1] { 0 });
+            t.Add("SWAP", new int[2] { 0, 2 });
+            t.Add("Z", new int[1] { 2 });
+            t.Add("M", new int[1] { 2 });
+
+            Circuit circuit = new Circuit(t);
+            for (int i = 0; i < circuit.Operators.Count; i++)
+            {
+                Console.WriteLine(circuit.Operators[i]);
+            }
+            Console.WriteLine(t);
+        }
+
+        static void Qubit()
+        {
+            Qubit q = new Qubit();
+            QubitReg qreg = new QubitReg(3);
+
+            Console.WriteLine(q);
+            Console.WriteLine(qreg);
+        }
+
         static void Main()
         {
-            CircuitTest2();
+            Qubit();
         }
     }
 }

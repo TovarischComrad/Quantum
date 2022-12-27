@@ -61,11 +61,11 @@ namespace QuantumCore.Math
         {
             if (Im >= 0)
             {
-                return System.Math.Round(Re, 2).ToString() + "+" + System.Math.Round(Im, 2).ToString() + "i";
+                return string.Format("{0:F2}", Re) + "+" + string.Format("{0:F2}", Im) + "i";
             }
             else
             {
-                return System.Math.Round(Re, 2).ToString() + "-" + (-1 * System.Math.Round(Im, 2)).ToString() + "i";
+                return string.Format("{0:F2}", Re) + "-" + string.Format("{0:F2}", -1 * Im) + "i";
             }
         }
     }
