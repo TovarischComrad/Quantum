@@ -7,10 +7,42 @@ namespace QuantumCore.Quantum
 {
     internal class Qubit
     {
-        protected Vector Amplitude { get; set; }
+        public Vector Amplitude { get; }
         public Qubit()
         {
             Amplitude = new Vector { new Complex(1), new Complex(0) };
+        }
+
+        public override string ToString()
+        {
+            return Amplitude.ToString();
+        }
+    }
+
+    internal class QubitReg
+    {
+        protected Vector Amplitude { get; set; }
+
+        public QubitReg()
+        {
+            Qubit q = new Qubit();
+            Amplitude = q.Amplitude;
+        }
+
+        public QubitReg(int size)
+        {
+            Vector res = new Vector(1, new Complex(1));  
+            for (int i = 0; i < size; i++)
+            {
+                Qubit q = new Qubit();
+                res = res.TensorProduct(q.Amplitude);
+            }
+            Amplitude = res;
+        }
+
+        public override string ToString()
+        {
+            return Amplitude.ToString();
         }
     }
 
@@ -65,5 +97,46 @@ namespace QuantumCore.Quantum
             { "S", S },
             { "T", T }
         };
+
+        public static Matrix CNOT(int n)
+        {
+            Matrix first = new Matrix();
+            Matrix second = new Matrix();
+            if (n > 0)
+            {
+                first = Zero;
+                second = One;
+                for (int i = 0; i < n - 1; i++)
+                {
+                    first = first.TensorProduct(I);
+                    second = second.TensorProduct(I);
+                }
+                first = first.TensorProduct(I);
+                second = second.TensorProduct(X);
+            }
+            else
+            {
+                first = I;
+                second = X;
+                for (int i = 0; i < -1 - n; i++)
+                {
+                    first = first.TensorProduct(I);
+                    second = second.TensorProduct(I);
+                }
+                first = first.TensorProduct(Zero);
+                second = second.TensorProduct(One);
+            }
+            Matrix S = first.Plus(second);
+            return S;
+        }
+
+        public static Matrix SWAP(int n)
+        {
+            Matrix M1 = CNOT(n);
+            Matrix M2 = CNOT(-n);
+            Matrix Res = M1.Product(M2);
+            Res = Res.Product(M1);
+            return Res;
+        }
     }
 }
