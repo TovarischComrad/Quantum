@@ -36,7 +36,7 @@ namespace QuantumCore.Quantum
                             break;
                         }
                     }
-                    Operators.Add(new Matrix(1, 1, new Complex(num)));
+                    Operators.Insert(0, new Matrix(1, 1, new Complex(num)));
                     j++;
                     continue;
                 }
@@ -137,12 +137,16 @@ namespace QuantumCore.Quantum
             while (t < Operators.Count)
             {
                 Matrix res = new Matrix(size);
+
+                bool fl = false;
                 while (t < Operators.Count && Operators[t].Height != 1)
                 {
                     res = res.Product(Operators[t]);
                     t++;
+                    fl = true;
                 }
-                result.Add(res);
+                if (fl) { result.Add(res); }
+                
                 if (t < Operators.Count && Operators[t].Height == 1)
                 {
                     result.Add(Operators[t]);
@@ -150,6 +154,7 @@ namespace QuantumCore.Quantum
                 }
             }
 
+            result.Reverse();
             Operators = result;
         } 
     }

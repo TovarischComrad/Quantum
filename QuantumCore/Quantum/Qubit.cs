@@ -21,12 +21,14 @@ namespace QuantumCore.Quantum
 
     internal class QubitReg
     {
-        protected Vector Amplitude { get; set; }
+        public Vector Amplitude { get; set; }
+        public int Size { get; }
 
         public QubitReg()
         {
             Qubit q = new Qubit();
             Amplitude = q.Amplitude;
+            Size = 1;
         }
 
         public QubitReg(int size)
@@ -38,6 +40,7 @@ namespace QuantumCore.Quantum
                 res = res.TensorProduct(q.Amplitude);
             }
             Amplitude = res;
+            Size = size;
         }
 
         public override string ToString()
