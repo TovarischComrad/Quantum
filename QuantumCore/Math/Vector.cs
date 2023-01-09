@@ -148,6 +148,25 @@ namespace QuantumCore.Math
             }
         }
 
+        public Vector Norm()
+        {
+            Vector res = new Vector(Size);
+            double den = 0.0;
+            for (int i = 0; i < Size; i++)
+            {
+                den += (this[i] * this[i]).abs();
+            }
+            Complex c = new Complex(System.Math.Sqrt(den));
+            double eps = 0.000001;
+            bool fl = System.Math.Abs(c.Re) < eps && System.Math.Abs(c.Im) < eps;
+            for (int i = 0; i < Size; i++)
+            {
+                if (fl) { res[i] = new Complex(0); }
+                else { res[i] = this[i] / c; }
+            }
+            return res;
+        }
+
         // Технические методы
         public override string ToString()
         {

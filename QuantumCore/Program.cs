@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using QuantumCore.Math;
 using QuantumCore.Quantum;
@@ -285,9 +286,108 @@ namespace QuantumCore
             Console.WriteLine(qreg);
         }
 
+        static void SimTest()
+        {
+            Template t = new Template(3);
+            t.Add("H", new int[1] { 0 });
+            t.Add("CNOT", new int[2] { 0, 1 });
+            t.Add("H", new int[1] { 1 });
+            t.Add("CNOT", new int[2] { 1, 0 });
+            t.Add("S", new int[1] { 1 });
+            t.Add("T", new int[1] { 0 });
+            t.Add("SWAP", new int[2] { 0, 2 });
+            t.Add("Z", new int[1] { 2 });
+            t.Add("M", new int[1] { 0 });
+
+            Circuit circ = new Circuit(t);
+            QubitReg qreg = new QubitReg(3);
+            Console.WriteLine(qreg);
+
+            Simulator sim = new Simulator(qreg, circ);
+            sim.Run();
+
+            QubitReg res = sim.QubitReg;
+            Console.WriteLine(res);
+
+            List<int> lst = sim.Result;
+            Console.WriteLine(lst[0]);
+        }
+
+        static void SimTest2()
+        {
+            Template t = new Template(2);
+            t.Add("H", new int[1] { 0 });
+            t.Add("CNOT", new int[2] { 0, 1 });
+
+            Circuit circ = new Circuit(t);
+            QubitReg qreg = new QubitReg(2);
+            Console.WriteLine(qreg);
+            Console.WriteLine("-----------------------------------------------------------------------------------");
+
+            Simulator sim = new Simulator(qreg, circ);
+            sim.Run();
+            QubitReg res = sim.QubitReg;
+            Console.WriteLine(res);
+            Console.WriteLine("-----------------------------------------------------------------------------------");
+
+            t.Add("M", new int[1] { 0 });
+            circ = new Circuit(t);
+            qreg = new QubitReg(2);
+            sim = new Simulator(qreg, circ);
+            sim.Run();
+            res = sim.QubitReg;
+            Console.WriteLine(res);
+            List<int> lst = sim.Result;
+            Console.WriteLine(lst[0]);
+            Console.WriteLine("-----------------------------------------------------------------------------------");
+
+
+            t.Add("M", new int[1] { 1 });
+            circ = new Circuit(t);
+            qreg = new QubitReg(2);
+            sim = new Simulator(qreg, circ);
+            sim.Run();
+            res = sim.QubitReg;
+            Console.WriteLine(res);
+            lst = sim.Result;
+            Console.WriteLine(lst[0]);
+            Console.WriteLine(lst[1]);
+        }
+
+        static void SimTest3()
+        {
+            Template t = new Template(2);
+            t.Add("H", new int[1] { 0 });
+            t.Add("CNOT", new int[2] { 0, 1 });
+            t.Add("M", new int[1] { 0 });
+            t.Add("M", new int[1] { 1 });
+
+            int zero = 0;
+            int one = 0;
+
+            for (int i = 0; i < 100; i++)
+            {
+                Circuit circ = new Circuit(t);
+                QubitReg qreg = new QubitReg(2);
+                Simulator simulator = new Simulator(qreg, circ);
+                simulator.Run();
+                List<int> lst = simulator.Result;
+                Console.Write(lst[0]);
+                Console.Write(" ");
+                Console.Write(lst[1]);
+                Console.WriteLine();
+                if (lst[0] == 0 && lst[1] == 0) { zero++; }
+                if (lst[0] == 1 && lst[1] == 1) { one++; }
+            }
+            Console.Write("00: ");
+            Console.WriteLine(zero);
+            Console.Write("11: ");
+            Console.WriteLine(one);
+        }
+
         static void Main()
         {
-            Qubit();
+            SimTest3();
         }
     }
 }
