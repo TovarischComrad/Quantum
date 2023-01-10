@@ -160,5 +160,22 @@ namespace QuantumCore.Quantum
             Res = Res.Product(M1);
             return Res;
         }
+
+        public static Matrix QFT(int n)
+        {
+            Template t = new Template(n);
+            for (int i = 0; i < n; i++)
+            {
+                t.Add("H", new double[1] { i });
+                double phi = 2.0;
+                for (int j = 2; j < n - i + 1; j++)
+                {
+                    t.Add("CR", new double[3] { i + j - 1, i, System.Math.PI / phi });
+                    phi *= 2.0;
+                }
+            }
+            Circuit circ = new Circuit(t);
+            return circ.Operators[0];
+        }
     }
 }

@@ -396,10 +396,18 @@ namespace QuantumCore
             Console.WriteLine(circ.Operators[0]);
         }
 
+        static void QFTTest()
+        {
+            Template t = new Template(3);
+            t.Add("QFT", new double[2] { 0, 2 });
+
+            Circuit circ = new Circuit(t);
+            Console.WriteLine(circ.Operators[0]);
+        }
+
         static void Main()
         {
-            RTest();
-            // SimTest3();
+            QFTTest();  
         }
     }
 }

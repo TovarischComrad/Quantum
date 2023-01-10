@@ -68,7 +68,7 @@ namespace QuantumCore.Quantum
                 }
 
                 // БИНАРНЫЕ ОПЕРАТОРЫ
-                if (j < types.Count && types[j] == 2)
+                if (j < types.Count && (types[j] == 2 || types[j] == 4))
                 {
                     List<int> ind = new List<int>();
                     int i0 = 0;
@@ -103,13 +103,25 @@ namespace QuantumCore.Quantum
                             ind.Add(i);
                             name = "SWAP";
                         }
+
+                        if (Template._Template[i][j] == "QFT")
+                        {
+                            ind.Add(i);
+                            name = "QFT";
+                        }
                     }
 
                     Matrix S = new Matrix();
                     if (name == "SWAP") {
                         i0 = ind[0];
                         i1 = ind[1];
-                        S = Operator.SWAP(i1 - i0);
+                        S = Operator.SWAP(System.Math.Abs(i1 - i0));
+                    }
+                    if (name == "QFT")
+                    {
+                        i0 = ind[0];
+                        i1 = ind[1];
+                        S = Operator.QFT(System.Math.Abs(i1 - i0 + 1));
                     }
                     if (name == "CNOT") { S = Operator.CNOT(i1 - i0); }
                     if (name == "CR") { S = Operator.CR(i1 - i0, Template.Parameters[j]); }

@@ -25,6 +25,7 @@ namespace QuantumCore.Quantum
         // 1 - унарный оператор
         // 2 - бинарный оператор
         // 3 - тернарный оператор
+        // 4 - особые операторы (QFT)
         public List<int> Type { get; protected set; }
 
         public Template(int size)
@@ -97,6 +98,22 @@ namespace QuantumCore.Quantum
             {
                 LetterSize.Add(4);
                 Type.Add(2);
+                for (int i = 0; i < Size; i++)
+                {
+                    if (i == Param[0] || i == Param[1])
+                    {
+                        _Template[i].Add(Operator);
+                    }
+                    else
+                    {
+                        _Template[i].Add("I");
+                    }
+                }
+            }
+            if (Operator == "QFT")
+            {
+                LetterSize.Add(3);
+                Type.Add(4);
                 for (int i = 0; i < Size; i++)
                 {
                     if (i == Param[0] || i == Param[1])
