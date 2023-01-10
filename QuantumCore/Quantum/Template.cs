@@ -64,9 +64,18 @@ namespace QuantumCore.Quantum
                 if (Operator == "R") { Parameters.Add(Param[1]); }
                 else { Parameters.Add(0); }
             }
-            if (Operator == "CNOT")
+            if (Operator == "CNOT" || Operator == "CR")
             {
-                LetterSize.Add(5);
+                if (Operator == "CNOT")
+                {
+                    LetterSize.Add(5);
+                    Parameters.Add(0);
+                }
+                if (Operator == "CR")
+                {
+                    LetterSize.Add(3);
+                    Parameters.Add(Param[2]);
+                }
                 Type.Add(2);
                 for (int i = 0; i < Size; i++)
                 {

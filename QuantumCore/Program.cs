@@ -388,8 +388,9 @@ namespace QuantumCore
 
         static void RTest()
         {
-            Template t = new Template(1);
-            t.Add("R", new double[2] { 0, System.Math.PI / 8.0 });
+            Template t = new Template(2);
+            t.Add("CR", new double[3] { 1, 0, System.Math.PI / 8.0 });
+            t.Add("CR", new double[3] { 0, 1, System.Math.PI / 4.0 });
 
             Circuit circ = new Circuit(t);
             Console.WriteLine(circ.Operators[0]);
@@ -398,6 +399,7 @@ namespace QuantumCore
         static void Main()
         {
             RTest();
+            // SimTest3();
         }
     }
 }

@@ -87,6 +87,17 @@ namespace QuantumCore.Quantum
                             name = "CNOT";
                         }
 
+                        if (Template._Template[i][j] == "CR0")
+                        {
+                            i0 = i;
+                            name = "CR";
+                        }
+                        if (Template._Template[i][j] == "CR1")
+                        {
+                            i1 = i;
+                            name = "CR";
+                        }
+
                         if (Template._Template[i][j] == "SWAP")
                         {
                             ind.Add(i);
@@ -101,6 +112,7 @@ namespace QuantumCore.Quantum
                         S = Operator.SWAP(i1 - i0);
                     }
                     if (name == "CNOT") { S = Operator.CNOT(i1 - i0); }
+                    if (name == "CR") { S = Operator.CR(i1 - i0, Template.Parameters[j]); }
 
                     //Matrix Op = new Matrix(1, 1, new Complex(1));
                     //for (int i = Template.Size - 1; i > System.Math.Max(i0, i1); i--)

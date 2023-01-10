@@ -109,7 +109,7 @@ namespace QuantumCore.Quantum
             return R;
         }
 
-        public static Matrix CNOT(int n)
+        public static Matrix Controlled(int n, Matrix Op)
         {
             Matrix first = new Matrix();
             Matrix second = new Matrix();
@@ -123,12 +123,12 @@ namespace QuantumCore.Quantum
                     second = second.TensorProduct(I);
                 }
                 first = first.TensorProduct(I);
-                second = second.TensorProduct(X);
+                second = second.TensorProduct(Op);
             }
             else
             {
                 first = I;
-                second = X;
+                second = Op;
                 for (int i = 0; i < -1 - n; i++)
                 {
                     first = first.TensorProduct(I);
@@ -139,6 +139,17 @@ namespace QuantumCore.Quantum
             }
             Matrix S = first.Plus(second);
             return S;
+        }
+
+        public static Matrix CNOT(int n)
+        {
+            return Controlled(n, X);
+        }
+
+        public static Matrix CR(int n, double phi)
+        {
+            Matrix R = Rphi(phi);
+            return Controlled(n, R);
         }
 
         public static Matrix SWAP(int n)
