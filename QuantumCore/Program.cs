@@ -1,8 +1,8 @@
-﻿using System;
+﻿using QuantumCore.Math;
+using QuantumCore.Quantum;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using QuantumCore.Math;
-using QuantumCore.Quantum;
 
 namespace QuantumCore
 {
@@ -198,19 +198,19 @@ namespace QuantumCore
         static void TemplateTest()
         {
             Template t = new Template(3);
-            t.Add("H", new int[1] { 0 });
-            t.Add("X", new int[1] { 1 });
-            t.Add("CNOT", new int[2] { 1, 2 });
-            t.Add("M", new int[1] { 1 });
-            t.Add("SWAP", new int[2] { 0, 2 });
+            t.Add("H", new double[1] { 0 });
+            t.Add("X", new double[1] { 1 });
+            t.Add("CNOT", new double[2] { 1, 2 });
+            t.Add("M", new double[1] { 1 });
+            t.Add("SWAP", new double[2] { 0, 2 });
             Console.WriteLine(t);
         }
 
         static void CircuitTest()
         {
             Template t = new Template(2);
-            t.Add("H", new int[1] { 0 });
-            t.Add("X", new int[1] { 1 });
+            t.Add("H", new double[1] { 0 });
+            t.Add("X", new double[1] { 1 });
 
             Circuit circ = new Circuit(t);
             Console.WriteLine(circ.Operators[0]);
@@ -219,7 +219,7 @@ namespace QuantumCore
         static void CNOTTest()
         {
             Template t = new Template(3);
-            t.Add("CNOT", new int[2] { 2, 1 });
+            t.Add("CNOT", new double[2] { 2, 1 });
 
             Circuit circ = new Circuit(t);
             Console.WriteLine(circ.Operators[0]);
@@ -228,7 +228,7 @@ namespace QuantumCore
         static void SWAPTest()
         {
             Template t = new Template(3);
-            t.Add("SWAP", new int[2] { 2, 1 });
+            t.Add("SWAP", new double[2] { 2, 1 });
 
             Circuit circ = new Circuit(t);
             Console.WriteLine(circ.Operators[0]);
@@ -237,13 +237,14 @@ namespace QuantumCore
         static void Bell()
         {
             Template t = new Template(2);
-            t.Add("H", new int[1] { 0 });
-            t.Add("CNOT", new int[2] { 0, 1 });
-            t.Add("M", new int[1] { 0 });
-            t.Add("M", new int[1] { 1 });
+            t.Add("H", new double[1] { 0 });
+            t.Add("CNOT", new double[2] { 0, 1 });
+            t.Add("M", new double[1] { 0 });
+            t.Add("M", new double[1] { 1 });
 
             Circuit circuit = new Circuit(t);
-            for (int i = 0; i < circuit.Operators.Count; i++) {
+            for (int i = 0; i < circuit.Operators.Count; i++)
+            {
                 Console.WriteLine(circuit.Operators[i]);
             }
 
@@ -259,15 +260,15 @@ namespace QuantumCore
         static void Hren()
         {
             Template t = new Template(3);
-            t.Add("H", new int[1] { 0 });
-            t.Add("CNOT", new int[2] { 0, 1 });
-            t.Add("H", new int[1] { 1 });
-            t.Add("CNOT", new int[2] { 1, 0 });
-            t.Add("S", new int[1] { 1 });
-            t.Add("T", new int[1] { 0 });
-            t.Add("SWAP", new int[2] { 0, 2 });
-            t.Add("Z", new int[1] { 2 });
-            t.Add("M", new int[1] { 2 });
+            t.Add("H", new double[1] { 0 });
+            t.Add("CNOT", new double[2] { 0, 1 });
+            t.Add("H", new double[1] { 1 });
+            t.Add("CNOT", new double[2] { 1, 0 });
+            t.Add("S", new double[1] { 1 });
+            t.Add("T", new double[1] { 0 });
+            t.Add("SWAP", new double[2] { 0, 2 });
+            t.Add("Z", new double[1] { 2 });
+            t.Add("M", new double[1] { 2 });
 
             Circuit circuit = new Circuit(t);
             for (int i = 0; i < circuit.Operators.Count; i++)
@@ -289,15 +290,15 @@ namespace QuantumCore
         static void SimTest()
         {
             Template t = new Template(3);
-            t.Add("H", new int[1] { 0 });
-            t.Add("CNOT", new int[2] { 0, 1 });
-            t.Add("H", new int[1] { 1 });
-            t.Add("CNOT", new int[2] { 1, 0 });
-            t.Add("S", new int[1] { 1 });
-            t.Add("T", new int[1] { 0 });
-            t.Add("SWAP", new int[2] { 0, 2 });
-            t.Add("Z", new int[1] { 2 });
-            t.Add("M", new int[1] { 0 });
+            t.Add("H", new double[1] { 0 });
+            t.Add("CNOT", new double[2] { 0, 1 });
+            t.Add("H", new double[1] { 1 });
+            t.Add("CNOT", new double[2] { 1, 0 });
+            t.Add("S", new double[1] { 1 });
+            t.Add("T", new double[1] { 0 });
+            t.Add("SWAP", new double[2] { 0, 2 });
+            t.Add("Z", new double[1] { 2 });
+            t.Add("M", new double[1] { 0 });
 
             Circuit circ = new Circuit(t);
             QubitReg qreg = new QubitReg(3);
@@ -316,8 +317,8 @@ namespace QuantumCore
         static void SimTest2()
         {
             Template t = new Template(2);
-            t.Add("H", new int[1] { 0 });
-            t.Add("CNOT", new int[2] { 0, 1 });
+            t.Add("H", new double[1] { 0 });
+            t.Add("CNOT", new double[2] { 0, 1 });
 
             Circuit circ = new Circuit(t);
             QubitReg qreg = new QubitReg(2);
@@ -330,7 +331,7 @@ namespace QuantumCore
             Console.WriteLine(res);
             Console.WriteLine("-----------------------------------------------------------------------------------");
 
-            t.Add("M", new int[1] { 0 });
+            t.Add("M", new double[1] { 0 });
             circ = new Circuit(t);
             qreg = new QubitReg(2);
             sim = new Simulator(qreg, circ);
@@ -342,7 +343,7 @@ namespace QuantumCore
             Console.WriteLine("-----------------------------------------------------------------------------------");
 
 
-            t.Add("M", new int[1] { 1 });
+            t.Add("M", new double[1] { 1 });
             circ = new Circuit(t);
             qreg = new QubitReg(2);
             sim = new Simulator(qreg, circ);
@@ -357,10 +358,10 @@ namespace QuantumCore
         static void SimTest3()
         {
             Template t = new Template(2);
-            t.Add("H", new int[1] { 0 });
-            t.Add("CNOT", new int[2] { 0, 1 });
-            t.Add("M", new int[1] { 0 });
-            t.Add("M", new int[1] { 1 });
+            t.Add("H", new double[1] { 0 });
+            t.Add("CNOT", new double[2] { 0, 1 });
+            t.Add("M", new double[1] { 0 });
+            t.Add("M", new double[1] { 1 });
 
             int zero = 0;
             int one = 0;
@@ -385,10 +386,18 @@ namespace QuantumCore
             Console.WriteLine(one);
         }
 
+        static void RTest()
+        {
+            Template t = new Template(1);
+            t.Add("R", new double[2] { 0, System.Math.PI / 8.0 });
+
+            Circuit circ = new Circuit(t);
+            Console.WriteLine(circ.Operators[0]);
+        }
+
         static void Main()
         {
-            //sdfs df
-            SimTest3();
+            RTest();
         }
     }
 }

@@ -101,6 +101,14 @@ namespace QuantumCore.Quantum
             { "T", T }
         };
 
+        public static Matrix Rphi(double phi)
+        {
+            Matrix R = new Matrix(2);
+            Complex z = new Complex(1, phi, true);
+            R[1][1] = z;
+            return R;
+        }
+
         public static Matrix CNOT(int n)
         {
             Matrix first = new Matrix();

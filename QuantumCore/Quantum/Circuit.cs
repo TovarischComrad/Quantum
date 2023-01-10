@@ -55,7 +55,15 @@ namespace QuantumCore.Quantum
                     //}
                     for (int i = 0; i < Template.Size; i++)
                     {
-                        Op = Op.TensorProduct(Operator.OperatorsDict[Template._Template[i][j]]);
+                        if (Template._Template[i][j] == "R")
+                        {
+                            Matrix R = Operator.Rphi(Template.Parameters[j]);
+                            Op = Op.TensorProduct(R);
+                        }
+                        else
+                        {
+                            Op = Op.TensorProduct(Operator.OperatorsDict[Template._Template[i][j]]);
+                        }
                     }
                 }
 

@@ -17,6 +17,9 @@ namespace QuantumCore.Quantum
         // Кол-во букв для каждой колонки
         public List<int> LetterSize { get; protected set; }
 
+        // Дополнительные параметры
+        public List<double> Parameters { get; protected set; }
+
         // Список индикаторов, показывающие тип операторов
         // 0 - оператор измерения
         // 1 - унарный оператор
@@ -29,16 +32,18 @@ namespace QuantumCore.Quantum
             Size = size;
             _Template = new List<string>[Size];
             LetterSize = new List<int>();
+            Parameters = new List<double>();
             Type = new List<int>();
             for (int i = 0; i < Size; i++)
             {
                 _Template[i] = new List<string>();
             }
         }
-        public void Add(string Operator, int[] Param)
+        public void Add(string Operator, double[] Param)
         {
             if (Operator == "I" || Operator == "H" || Operator == "X" || Operator == "Y"
-                 || Operator == "Z" || Operator == "S" || Operator == "T" || Operator == "M")
+                 || Operator == "Z" || Operator == "S" || Operator == "T" || Operator == "M"
+                 || Operator == "R")
             {
                 LetterSize.Add(1);
                 for (int i = 0; i < Size; i++)
@@ -55,6 +60,9 @@ namespace QuantumCore.Quantum
 
                 if (Operator == "M") { Type.Add(0); }
                 else { Type.Add(1); }
+
+                if (Operator == "R") { Parameters.Add(Param[1]); }
+                else { Parameters.Add(0); }
             }
             if (Operator == "CNOT")
             {
