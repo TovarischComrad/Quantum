@@ -43,6 +43,17 @@ namespace QuantumCore.Quantum
             Size = size;
         }
 
+        public List<double> Probability()
+        {
+            List<double> res = new List<double>();
+            for (int i = 0; i < Amplitude.Size; i++)
+            {
+                double r = Amplitude[i].abs();
+                res.Add(r * r);
+            }
+            return res;
+        }
+
         public override string ToString()
         {
             return Amplitude.ToString();
