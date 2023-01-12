@@ -405,9 +405,18 @@ namespace QuantumCore
             Console.WriteLine(circ.Operators[0]);
         }
 
+        static void R2Test()
+        {
+            Template t = new Template(1);
+            t.Add("RZ", new double[2] { 0, System.Math.PI });
+
+            Circuit circ = new Circuit(t);
+            Console.WriteLine(circ.Operators[0]);
+        }
+
         static void Main()
         {
-            QFTTest();  
+            R2Test();  
         }
     }
 }

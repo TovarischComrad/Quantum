@@ -60,6 +60,21 @@ namespace QuantumCore.Quantum
                             Matrix R = Operator.Rphi(Template.Parameters[j]);
                             Op = Op.TensorProduct(R);
                         }
+                        else if (Template._Template[i][j] == "RX")
+                        {
+                            Matrix RX = Operator.RX(Template.Parameters[j]);
+                            Op = Op.TensorProduct(RX);
+                        }
+                        else if (Template._Template[i][j] == "RY")
+                        {
+                            Matrix RY = Operator.RY(Template.Parameters[j]);
+                            Op = Op.TensorProduct(RY);
+                        }
+                        else if (Template._Template[i][j] == "RZ")
+                        {
+                            Matrix RZ = Operator.RZ(Template.Parameters[j]);
+                            Op = Op.TensorProduct(RZ);
+                        }
                         else
                         {
                             Op = Op.TensorProduct(Operator.OperatorsDict[Template._Template[i][j]]);

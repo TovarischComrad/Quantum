@@ -109,6 +109,41 @@ namespace QuantumCore.Quantum
             return R;
         }
 
+        public static Matrix RX(double theta)
+        {
+            Matrix RX = new Matrix(2);
+            Complex z1 = new Complex(System.Math.Cos(theta / 2.0));
+            Complex z2 = new Complex(0.0, -System.Math.Sin(theta / 2.0));
+            RX[0][0] = z1;
+            RX[0][1] = z2;
+            RX[1][0] = z2;
+            RX[1][1] = z1;
+            return RX;
+        }
+
+        public static Matrix RY(double theta)
+        {
+            Matrix RY = new Matrix(2);
+            Complex z1 = new Complex(System.Math.Cos(theta / 2.0));
+            Complex z2 = new Complex(0.0, -System.Math.Sin(theta / 2.0));
+            Complex z3 = new Complex(0.0, System.Math.Sin(theta / 2.0));
+            RY[0][0] = z1;
+            RY[0][1] = z2;
+            RY[1][0] = z3;
+            RY[1][1] = z1;
+            return RY;
+        }
+
+        public static Matrix RZ(double theta)
+        {
+            Matrix RZ = new Matrix(2);
+            Complex z1 = new Complex(1.0, -theta / 2.0, true);
+            Complex z2 = new Complex(1.0, theta / 2.0, true);
+            RZ[0][0] = z1;
+            RZ[1][1] = z2;
+            return RZ;
+        }
+
         public static Matrix Controlled(int n, Matrix Op)
         {
             Matrix first = new Matrix();
