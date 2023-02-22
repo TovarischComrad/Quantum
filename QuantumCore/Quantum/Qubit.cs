@@ -70,32 +70,32 @@ namespace QuantumCore.Quantum
             = new Matrix { new Vector { new Complex(0), new Complex(0) },
                            new Vector { new Complex(0), new Complex(1) } };
 
-        public static readonly Matrix I 
+        public static readonly Matrix I
             = new Matrix { new Vector { new Complex(1), new Complex(0) },
                            new Vector { new Complex(0), new Complex(1) } };
 
-        public static readonly Matrix X 
+        public static readonly Matrix X
             = new Matrix { new Vector { new Complex(0), new Complex(1) },
                            new Vector { new Complex(1), new Complex(0) } };
 
-        public static readonly Matrix Y 
+        public static readonly Matrix Y
             = new Matrix { new Vector { new Complex(0), new Complex(0, -1) },
                            new Vector { new Complex(0, 1), new Complex(0) } };
 
-        public static readonly Matrix Z 
+        public static readonly Matrix Z
             = new Matrix { new Vector { new Complex(1), new Complex(0) },
                            new Vector { new Complex(0), new Complex(-1) } };
 
-        public static readonly Matrix H 
+        public static readonly Matrix H
             = new Matrix { new Vector { new Complex(1), new Complex(1) },
                            new Vector { new Complex(1), new Complex(-1) } }
                          .ScalarProduct(new Complex(1.0 / System.Math.Sqrt(2)));
 
-        public static readonly Matrix S 
+        public static readonly Matrix S
             = new Matrix { new Vector { new Complex(1), new Complex(0) },
                            new Vector { new Complex(0), new Complex(0, 1) } };
 
-        public static readonly Matrix T 
+        public static readonly Matrix T
             = new Matrix { new Vector { new Complex(1), new Complex(0) },
                            new Vector { new Complex(0), new Complex(1, System.Math.PI / 4, true) } };
 
@@ -222,6 +222,58 @@ namespace QuantumCore.Quantum
             }
             Circuit circ = new Circuit(t);
             return circ.Operators[0];
+        }
+
+        public static int f(int n)
+        {
+            if (n == 5) { return -1; }
+            else { return 1; }
+        }
+
+        public static Matrix GroverOracle(int n)
+        {
+            int N = (int)System.Math.Pow(2, n);
+            Matrix M = new Matrix(N);
+            for (int i = 0; i < N; i++)
+            {
+                M[4][4] = new Complex(-1);
+                // M[i][i] = new Complex(System.Math.Pow(-1.0, f(i)));
+            }
+            return M;
+        }
+
+        public static Matrix Hn(int n)
+        {
+            Matrix M = H;
+            for (int i = 1; i < n; i++)
+            {
+                M = H.TensorProduct(M);
+            }
+            return M;
+        }
+
+        public static Matrix GroverDiffuser(int n)
+        {
+            Matrix M = Hn(n);
+            int N = (int)System.Math.Pow(2, n);
+
+            Vector v = new Vector(N);
+            v[0] = new Complex(1);
+            v = v.MatrixProduct(M);
+
+            Matrix s1 = new Matrix(N, 1);
+            Matrix s2 = new Matrix(1, N);
+            for (int i = 0; i < N; i++)
+            {
+                s1[i][0] = v[i];
+                s2[0][i] = v[i];
+            }
+            Matrix res = s1.TensorProduct(s2);
+            res = res.ScalarProduct(new Complex(2));
+            Matrix identity = new Matrix(N);
+            res = res.Minus(identity);
+
+            return res;
         }
     }
 }

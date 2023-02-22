@@ -124,6 +124,24 @@ namespace QuantumCore.Quantum
                             ind.Add(i);
                             name = "QFT";
                         }
+
+                        if (Template._Template[i][j] == "GroverOracle")
+                        {
+                            ind.Add(i);
+                            name = "GroverOracle";
+                        }
+
+                        if (Template._Template[i][j] == "Hn")
+                        {
+                            ind.Add(i);
+                            name = "Hn";
+                        }
+
+                        if (Template._Template[i][j] == "GroverDiffuser")
+                        {
+                            ind.Add(i);
+                            name = "GroverDiffuser";
+                        }
                     }
 
                     Matrix S = new Matrix();
@@ -137,6 +155,24 @@ namespace QuantumCore.Quantum
                         i0 = ind[0];
                         i1 = ind[1];
                         S = Operator.QFT(System.Math.Abs(i1 - i0 + 1));
+                    }
+                    if (name == "GroverOracle")
+                    {
+                        i0 = ind[0];
+                        i1 = ind[1];
+                        S = Operator.GroverOracle(System.Math.Abs(i1 - i0 + 1));
+                    }
+                    if (name == "Hn")
+                    {
+                        i0 = ind[0];
+                        i1 = ind[1];
+                        S = Operator.Hn(System.Math.Abs(i1 - i0 + 1));
+                    }
+                    if (name == "GroverDiffuser")
+                    {
+                        i0 = ind[0];
+                        i1 = ind[1];
+                        S = Operator.GroverDiffuser(System.Math.Abs(i1 - i0 + 1));
                     }
                     if (name == "CNOT") { S = Operator.CNOT(i1 - i0); }
                     if (name == "CR") { S = Operator.CR(i1 - i0, Template.Parameters[j]); }
